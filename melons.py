@@ -1,4 +1,4 @@
-from flask import Flask, request, session, render_template, g, redirect, url_for, flash
+from flask import Flask, request, session, render_template, g, redirect, url_for, flash, make_response
 import model
 import jinja2
 import os
@@ -37,6 +37,15 @@ def shopping_cart():
 
 @app.route("/add_to_cart/<int:id>")
 def add_to_cart(id):
+
+    if 'cart' not in session:
+        session[cart]=[id]
+    else: 
+        cart.append(id)
+
+    print session 
+
+
     """TODO: Finish shopping cart functionality using session variables to hold
     cart list.
 
@@ -44,7 +53,7 @@ def add_to_cart(id):
     shopping cart page, while displaying the message
     "Successfully added to cart" """
 
-    return "Oops! This needs to be implemented!"
+    return render_template("cart.html")
 
 
 @app.route("/login", methods=["GET"])
