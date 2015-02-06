@@ -73,4 +73,19 @@ def get_melon_by_id(id):
     return melon
 
 def get_customer_by_email(email):
-    pass
+    cursor = connect()
+    query = """ SELECT email, password
+                FROM customers
+                WHERE email = ?;"""
+
+    cursor.execute(query, (email,))
+
+    row = cursor.fetchone()
+
+    if not row:
+        print "customer not found"
+        return False
+    else:
+        print "customer found"
+        return True
+

@@ -41,7 +41,7 @@ def shopping_cart():
         quantity = session['cart'][key][2]
         total = price * quantity
         grand_total = grand_total + total
-    return render_template("cart.html", grand_total=grand_total)
+    return render_template("cart.html", grand_total=grand_total, total=total)
 
 @app.route("/add_to_cart/<string:id>")
 def add_to_cart(id):
@@ -80,9 +80,21 @@ def show_login():
 
 @app.route("/login", methods=["POST"])
 def process_login():
+    print "this is running"
+    email = request.form['email']
+    password = request.form['password']
+    print email
+    print password
+    in_db = model.get_customer_by_email(email)
+    print in_db
+    if 'customer' not in session:
+        session['customer'] = {}
+        session['customer'] = email
+    print session
+    flash(email + " is logged in.")
     """TODO: Receive the user's login credentials located in the 'request.form'
     dictionary, look up the user, and store them in the session."""
-    return "Oops! This needs to be implemented"
+    return redirect("/melons")
 
 
 @app.route("/checkout")
